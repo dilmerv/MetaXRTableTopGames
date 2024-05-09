@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/BasicCameraRigBB.unity
+    guid: 624dc17be2b72b44c9c14489aa649370
+  - enabled: 0
+    path: Assets/Scenes/BasicCameraRigWiithPassthroughBB.unity
+    guid: 756222992262a1744bc8f39cc71fa297
+  - enabled: 1
+    path: Assets/Scenes/TabletopBowlingGameBB.unity
+    guid: 032e0abc80cec4b4a9df3110dde33d39
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: ce4111c17cceddc4295d4b0632d4282a, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 324a03908385fa54fba7e39799bf40b2, type: 2}
