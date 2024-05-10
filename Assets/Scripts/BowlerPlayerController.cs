@@ -127,6 +127,8 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
 
     private void LaunchBall(float debugDistance = 0)
     {
+        GameSessionManager.Instance.StartRollSession();
+        
         if(!sfxForLaunchingBall.isPlaying) sfxForLaunchingBall.Play();
         
         Vector3 grabPosition = debugDistance == 0 ? controllerOrHandsAttachPoint.position : transform.position;
