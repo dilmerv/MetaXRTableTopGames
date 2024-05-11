@@ -12,8 +12,9 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
 {
     // interactables
     [SerializeField] private GrabInteractable grabInteractable;
-    [SerializeField] private HandGrabInteractable handGrabInteractable;
-
+    [SerializeField] private HandGrabInteractable leftHandGrabInteractable;
+    [SerializeField] private HandGrabInteractable rightHandGrabInteractable;
+    
     // physics & ball behaviour
     [SerializeField] private float maxPullDistance = 1.0f;
     [SerializeField] private float rotationSpeed = 500.0f;
@@ -57,7 +58,9 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         physics = GetComponent<Rigidbody>();
         statsText.gameObject.SetActive(false);
 
-        grabbable = GetComponentInChildren<Grabbable>();
+        //TODO add this to the instructions, moved grabbable to parent and make it
+        //a requireComponent
+        grabbable = GetComponent<Grabbable>();
         grabbable.WhenPointerEventRaised += GrabbableOnWhenPointerEventRaised;
 
         // let's place the player it at a random position
@@ -111,8 +114,8 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
 
     private void UpdateLineRenderer()
     {
-        lineRenderer.SetPosition(0, pullInitialPosition);
-        lineRenderer.SetPosition(1, transform.position);
+        lineRenderer.SetPosition(0, aimArrow.position);
+        lineRenderer.SetPosition(1, controllerOrHandsAttachPoint.position);
     }
     
     private void UpdateAimArrowRotation()
@@ -125,19 +128,17 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         }
     }
 
-    private void LaunchBall(float debugDistance = 0)
+    private void LaunchBall()
     {
         GameSessionManager.Instance.StartRollSession();
         
         if(!sfxForLaunchingBall.isPlaying) sfxForLaunchingBall.Play();
         
-        Vector3 grabPosition = debugDistance == 0 ? controllerOrHandsAttachPoint.position : transform.position;
-        Vector3 direction = debugDistance == 0 ? (pullInitialPosition - grabPosition).normalized : transform.forward;
+        Vector3 grabPosition = controllerOrHandsAttachPoint.position;
+        Vector3 direction = (pullInitialPosition - grabPosition).normalized;
         physics.isKinematic = false;
 
-        float distance = debugDistance == 0
-            ? Mathf.Clamp(Vector3.Distance(pullInitialPosition, grabPosition), 0, maxPullDistance)
-            : debugDistance;
+        float distance = Mathf.Clamp(Vector3.Distance(pullInitialPosition, grabPosition), 0, maxPullDistance);
         
         // Apply force in the launch direction
         launchedBallForceDirection = direction * (launchForce * (launchForce * distance));
@@ -166,9 +167,14 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
             currentTransform = grabInteractable.Interactors.First()
                 .transform;
         }
-        else if (handGrabInteractable.State == InteractableState.Select)
+        else if (leftHandGrabInteractable.State == InteractableState.Select)
         {
-            currentTransform = handGrabInteractable.Interactors.First()
+            currentTransform = leftHandGrabInteractable.Interactors.First()
+                .PinchPoint;
+        }
+        else if (rightHandGrabInteractable.State == InteractableState.Select)
+        {
+            currentTransform = rightHandGrabInteractable.Interactors.First()
                 .PinchPoint;
         }
         return currentTransform;
