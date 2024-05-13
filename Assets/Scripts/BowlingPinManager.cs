@@ -27,8 +27,7 @@ public class BowlingPinManager : Singleton<BowlingPinManager>
         Spare,
         Lost
     }
-
-
+    
     void Awake() => cachedPins = FindObjectsByType<BowlingPin>(FindObjectsSortMode.None).ToList();
 
     private void Start()

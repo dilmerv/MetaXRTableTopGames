@@ -21,8 +21,6 @@ public class GamePortalManager : Singleton<GamePortalManager>
     private Vector3 gameAreaOutsidePortalValues = new Vector3(0, 0.4f, 0);
     
     private bool isGateClosed = true;
-
-    public UnityEvent onPortalMoveAnimationCompleted = new();
     
     public void Setup()
     {
