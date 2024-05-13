@@ -1,5 +1,6 @@
 using LearnXR.Core;
 using UnityEngine;
+using UnityEngine.Events;
 using Utilities;
 
 public class GamePortalManager : Singleton<GamePortalManager>
@@ -20,6 +21,8 @@ public class GamePortalManager : Singleton<GamePortalManager>
     private Vector3 gameAreaOutsidePortalValues = new Vector3(0, 0.4f, 0);
     
     private bool isGateClosed = true;
+
+    public UnityEvent onPortalMoveAnimationCompleted = new();
     
     public void Setup()
     {
@@ -37,11 +40,19 @@ public class GamePortalManager : Singleton<GamePortalManager>
         // This is needed for initial room placement boundary calculation. Keep the portal closed to avoid 
         // generating additional gaps during TableSetup placement executed from [BuildingBlock] Find Spawn Positions
         gameAreaMovement.Move(gameAreaOutsidePortalValues, gameAreaInsidePortalValues, 0, 0);
+        
+        gameAreaMovement.onTransitionStarted.AddListener(BowlingPinManager.Instance.LockPins);
+        gameAreaMovement.onTransitionEnded.AddListener(BowlingPinManager.Instance.UnlockPins);
     }
 
     public bool ToggleGameArea()
     {
-        isGateClosed = !isGateClosed;
+        // only allow a toggle if we don't have transitions
+        if (gameAreaMovement.IsTransitionInProgress || gateScale.IsTransitionInProgress)
+            return isGateClosed;
+            
+        isGateClosed = !isGateClosed;    
+            
         if (isGateClosed)
         {
             gameAreaMovement.Move(gameAreaOutsidePortalValues, gameAreaInsidePortalValues, 0, 1.5f);

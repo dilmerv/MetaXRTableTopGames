@@ -3,12 +3,10 @@ using UnityEngine;
 
 namespace Utilities
 {
-    public class ScaleObjectOverTime : MonoBehaviour
+    public class ScaleObjectOverTime : BaseTransitionObject
     {
-        [SerializeField] private Vector3 fromScale = new Vector3(1f, 1f, 1f);
-        [SerializeField] private Vector3 toScale = new Vector3(2f, 2f, 2f);
-        [SerializeField] private float duration = 2f;
-        [SerializeField] private float delay = 1f;
+        [SerializeField] private Vector3 fromScale = new (1f, 1f, 1f);
+        [SerializeField] private Vector3 toScale = new (2f, 2f, 2f);
         
         public void Scale(Vector3 fromScale, Vector3 toScale, float delay, float duration)
         {
@@ -22,6 +20,7 @@ namespace Utilities
 
         private IEnumerator ScaleCoroutine()
         {
+            StartTransition();
             yield return new WaitForSeconds(delay);
 
             float timer = 0f;
@@ -34,6 +33,7 @@ namespace Utilities
             }
 
             transform.localScale = toScale;
+            EndTransition();
         }
     }
 }

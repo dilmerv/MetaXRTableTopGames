@@ -37,12 +37,19 @@ public class BowlingPinManager : Singleton<BowlingPinManager>
         bowlingRoundText.text = $"<color=orange>ROUND {GameSessionManager.Instance.currentPlayerAttempt}</color>";
     }
 
+    public void LockPins()
+    {
+        cachedPins.ForEach(p => p.SetPhysics(false));
+    }
+
+    public void UnlockPins()
+    {
+        cachedPins.ForEach(p => p.SetPhysics(true));
+    }
+    
     private void OnEnable()
     {
-        BowlerPlayerController.Instance.onBallLaunched.AddListener(() =>
-        {
-            cachedPins.ForEach(p => p.SetPhysics(true));
-        });
+        BowlerPlayerController.Instance.onBallLaunched.AddListener(UnlockPins);
         
         BowlerPlayerController.Instance.onBallHitPin.AddListener(() => {
             var pinsHitsAudioSource = GetComponent<AudioSource>();

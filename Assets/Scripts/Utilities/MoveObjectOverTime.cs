@@ -1,17 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
-public class MoveObjectOverTime : MonoBehaviour
+public class MoveObjectOverTime : BaseTransitionObject
 {
     [SerializeField]
-    private Vector3 fromPosition = new Vector3(0f, 0f, 0f);
+    private Vector3 fromPosition = new (0f, 0f, 0f);
     
     [SerializeField]
-    private Vector3 toPosition = new Vector3(0f, 1f, 0f);
+    private Vector3 toPosition = new (0f, 1f, 0f);
     
-    public float duration = 2f; 
-    public float delay = 1f;
-
     public void Move(Vector3 fromPosition, Vector3 toPosition, float delay, float duration)
     {
         this.fromPosition = fromPosition;
@@ -24,6 +22,8 @@ public class MoveObjectOverTime : MonoBehaviour
     
     private IEnumerator MoveCoroutine()
     {
+        StartTransition();
+        
         yield return new WaitForSeconds(delay);
 
         float timer = 0f;
@@ -35,5 +35,7 @@ public class MoveObjectOverTime : MonoBehaviour
             yield return null;
         }
         transform.localPosition = toPosition;
+        
+        EndTransition();
     }
 }

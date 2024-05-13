@@ -32,6 +32,9 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
     [SerializeField] private AudioSource sfxForBallSelection;
     [SerializeField] private AudioSource sfxForLaunchingBall;
     
+    // progress
+    [SerializeField] private Transform progressBar;
+    
     // public events
     public UnityEvent onBallLaunched = new();
     public UnityEvent onBallRestored = new();
@@ -113,8 +116,10 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
             
             float distance = Mathf.Clamp(Vector3.Distance(pullInitialPosition, transform.position), 
                 0, maxPullDistance);
-
-            statsText.text = $"Launch Power: {distance:F}";
+            
+            // simple progress bar
+            statsText.text = $"Launch Power\n<color=white>{distance:F}</color>";
+            progressBar.localScale = new Vector3(distance, 1, 1);
         }
         else if (isGrabbing && !hasLaunched)
         {
@@ -123,9 +128,7 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         }
         
         if (hasLaunched)
-        {
             visuals.Rotate(transform.right,  physics.velocity.z * rotationSpeed, Space.World);
-        }
     }
 
     private void UpdateLineRenderer()
