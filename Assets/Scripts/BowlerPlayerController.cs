@@ -34,6 +34,7 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
     
     // public events
     public UnityEvent onBallLaunched = new();
+    public UnityEvent onBallRestored = new();
     public UnityEvent onBallHitPin = new();
     
     // Controller(s) Or Hand(s) attach point for ball positioning
@@ -41,6 +42,7 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
     
     // private variables
     private LineRenderer lineRenderer;
+    private TrailRenderer trailRenderer;
     private Vector3 pullInitialPosition;
     private Quaternion initialVisualsRotation;
     private bool isGrabbing;
@@ -55,11 +57,15 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
+        
+        trailRenderer = GetComponent<TrailRenderer>();
+        trailRenderer.enabled = false;
+        
         physics = GetComponent<Rigidbody>();
         statsText.gameObject.SetActive(false);
 
         //TODO add this to the instructions, moved grabbable to parent and make it
-        //a requireComponent
+        //a requireComponent as this will be needed when adding custom hand poses
         grabbable = GetComponent<Grabbable>();
         grabbable.WhenPointerEventRaised += GrabbableOnWhenPointerEventRaised;
 
@@ -67,6 +73,16 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         transform.position = GetRandomSurfacePosition();
         initialVisualsRotation = visuals.rotation;
         aimArrow.position = transform.position;
+        
+        onBallLaunched.AddListener(() =>
+        {
+            trailRenderer.enabled = true;
+        });
+        
+        onBallRestored.AddListener(() =>
+        {
+            trailRenderer.enabled = false;
+        });
     }
     
     private void GrabbableOnWhenPointerEventRaised(PointerEvent pointerEvent)
@@ -195,6 +211,8 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         launchedBallForceDirection = Vector3.zero;
         
         hasLaunched = false;
+        
+        onBallRestored.Invoke();
     }
 
     private Vector3 GetRandomSurfacePosition()
@@ -216,5 +234,12 @@ public class BowlerPlayerController : Singleton<BowlerPlayerController>
         {
             onBallHitPin.Invoke();
         }
+    }
+
+    private void OnDestroy()
+    {
+        onBallLaunched.RemoveAllListeners();
+        onBallRestored.RemoveAllListeners();
+        onBallHitPin.RemoveAllListeners();
     }
 }
