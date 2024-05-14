@@ -1,3 +1,4 @@
+using System;
 using LearnXR.Core;
 using TMPro;
 using UnityEngine;
@@ -7,7 +8,9 @@ public class PalmMenuOptions : Singleton<PalmMenuOptions>
     [SerializeField] private Transform palmMenu;
 
     [SerializeField] private TextMeshPro palmScaleLabel;
-    
+
+    private void Awake() => palmMenu.gameObject.SetActive(false);
+
     public void TogglePalmMenuVisibility() => palmMenu.gameObject.SetActive(!palmMenu.gameObject.activeSelf);
 
     public void ToggleAxisHandler()
