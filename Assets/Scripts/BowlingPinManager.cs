@@ -49,6 +49,8 @@ public class BowlingPinManager : Singleton<BowlingPinManager>
     private void OnEnable()
     {
         BowlerPlayerController.Instance.onBallLaunched.AddListener(UnlockPins);
+        AxisHandler.Instance.onAxisSelected.AddListener(LockPins);
+        AxisHandler.Instance.onAxisCancelled.AddListener(UnlockPins);
         
         BowlerPlayerController.Instance.onBallHitPin.AddListener(() => {
             var pinsHitsAudioSource = GetComponent<AudioSource>();

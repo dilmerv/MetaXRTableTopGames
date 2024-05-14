@@ -12,7 +12,7 @@ namespace LearnXR.Core
             {
                 if (_instance == null)
                 {
-                    var objs = FindObjectsOfType(typeof(T)) as T[];
+                    var objs = FindObjectsOfType(typeof(T), true) as T[];
                     if (objs.Length > 0)
                         _instance = objs[0];
                     if (objs.Length > 1)
