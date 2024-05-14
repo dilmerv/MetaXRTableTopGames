@@ -2133,10 +2133,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6227196328939342745, guid: 410ff1a0ea2963c47960e20b7b45a005, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6529171048062047658, guid: 410ff1a0ea2963c47960e20b7b45a005, type: 3}
       propertyPath: m_Name
       value: BowlingBall
