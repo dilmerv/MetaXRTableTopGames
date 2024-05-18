@@ -17,3 +17,6 @@ A project aims to showcase a variety of examples built in [YouTube](https://www.
 |<img src="https://github.com/dilmerv/MetaXRTableTopGames/blob/master/docs/images/BasicCameraRigWithPassthroughBB.gif" width="560">|
 |Meta XR Simulator With TabletopBowlingGameBB.unity scene|
 |<img src="https://github.com/dilmerv/MetaXRTableTopGames/blob/master/docs/images/TabletopBowlingGameBB_With_MetaXRSim.gif" width="560">|
+
+### ✍️ Credits
+Big thanks to [Kenney](https://kenney.nl) for providing the [Space Station Kit](https://kenney.nl/assets/space-station-kit) used for this repo.
