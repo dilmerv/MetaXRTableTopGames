@@ -1,6 +1,8 @@
 # Meta XR Tabletop Games
-A project aims to showcase a variety of examples built in [YouTube](https://www.youtube.com/@dilmerv) with a focus on tabletop games in Mixed Reality. This also uses many of the [Meta's Presence Platform](https://developer.oculus.com/presence-platform/) features including passthrough, MRUK, hand and controller tracking, and interactions.
+This project aims to showcase a variety of examples built in [YouTube](https://www.youtube.com/@dilmerv) with a focus on tabletop games in Mixed Reality. This also uses many of the [Meta's Presence Platform](https://developer.oculus.com/presence-platform/) features including passthrough, MRUK, hand and controller tracking, interactions, and much more.
 
+🎬 _Watch [this video](https://youtu.be/QHMtVEX9O0Y) for a step by step on creating a Mixed Reality 🕹️ Tabletop Bowling Game._
+  
 ## Requirements
 - Unity 2022 LTS
 - [Meta XR All-In-One SDK](https://assetstore.unity.com/packages/tools/integration/meta-xr-all-in-one-sdk-269657?aid=1101l7LXo) _(Affiliate Link)_
